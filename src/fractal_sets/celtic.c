@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-int	celtic(double cr, double ci)
+int	celtic(t_fractol *f, double cr, double ci)
 {
 	int		n;
 	double	zr;
@@ -22,7 +22,7 @@ int	celtic(double cr, double ci)
 	zr = 0;
 	zi = 0;
 	n = 0;
-	while (n < MAX_ITER)
+	while (n < f->max_iter)
 	{
 		if ((zr * zr + zi * zi) > 4.0)
 			break ;

@@ -22,7 +22,6 @@
 /*  Dimensions	*/
 # define WIDTH 800
 # define HEIGHT 800
-# define MAX_ITER 60
 
 typedef struct s_fractol
 {
@@ -39,6 +38,7 @@ typedef struct s_fractol
 	double		max_r;
 	double		min_i;
 	double		max_i;
+	int			max_iter;
 	void		*img;
 	char		*addr;
 	int			bits_per_pixel;
@@ -58,7 +58,7 @@ int			end_fractol(t_fractol *mlx);
 void		clean_init(t_fractol *f);
 int			handle_mouse_event(t_fractol *f, int button);
 int			julia(t_fractol *f, double zr, double zi);
-int			mandelbrot(double cr, double ci);
+int			mandelbrot(t_fractol *f, double cr, double ci);
 int			julia_keys(int keycode, t_fractol *f);
 int			mouse_hook(int button, int x, int y, t_fractol *f);
 void		zoom(t_fractol *f, double mouse_x,
@@ -67,6 +67,6 @@ void		move(t_fractol *f, double distance, char direction);
 int			key_hook2(int keycode, t_fractol *f);
 void		pixelcolor(t_fractol *f, int x, int y, int color);
 int			setselect(t_fractol *f, int x, int y);
-int			burningship(double cr, double ci);
-int			celtic(double cr, double ci);
+int			burningship(t_fractol *f, double cr, double ci);
+int			celtic(t_fractol *f, double zr, double zi);
 #endif

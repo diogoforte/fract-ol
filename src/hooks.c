@@ -47,6 +47,10 @@ int	key_hook2(int keycode, t_fractol *f)
 		move(f, 0.2, 'D');
 	else if (keycode == KEY_D)
 		move(f, 0.2, 'R');
+	else if (keycode == KEY_UP)
+		f->max_iter += 50;
+	else if (keycode == KEY_DOWN)
+		f->max_iter -= 50;
 	else
 		return (1);
 	if (f)

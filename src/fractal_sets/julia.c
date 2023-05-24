@@ -18,7 +18,7 @@ int	julia(t_fractol *f, double zr, double zi)
 	double	tmp;
 
 	n = 0;
-	while (n < MAX_ITER)
+	while (n < f->max_iter)
 	{
 		if ((zi * zi + zr * zr) > 4.0)
 			break ;

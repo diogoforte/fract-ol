@@ -54,22 +54,22 @@ int	setselect(t_fractol *f, int x, int y)
 	pr = f->min_r + (double)x * (f->max_r - f->min_r) / WIDTH;
 	pi = f->max_i + (double)y * (f->min_i - f->max_i) / HEIGHT;
 	if (f->set == 1)
-		color = mandelbrot(pr, pi);
+		color = mandelbrot(f, pr, pi);
 	else if (f->set == 2)
 		color = julia(f, pr, pi);
 	else if (f->set == 3)
-		color = burningship(pr, pi);
+		color = burningship(f, pr, pi);
 	else if (f->set == 4)
-		color = celtic(pr, pi);
+		color = celtic(f, pr, pi);
 	return (color);
 }
 
 void	pixelcolor(t_fractol *f, int x, int y, int color)
 {
-	if (color == MAX_ITER)
+	if (color == f->max_iter)
 		color = 0;
 	else
-		color = create_trgb(0, f->r * color / MAX_ITER, f->g * color / MAX_ITER,
-				f->b * color / MAX_ITER);
+		color = create_trgb(0, f->r * color / f->max_iter, f->g * color / f->max_iter,
+				f->b * color / f->max_iter);
 	my_mlx_pixel_put(f, x, y, color);
 }

@@ -49,6 +49,7 @@ void	clean_init(t_fractol *f)
 	f->r = 255;
 	f->g = 0;
 	f->b = 0;
+	f->max_iter = 100;
 }
 
 void	handle_args(t_fractol *f, char **av)
