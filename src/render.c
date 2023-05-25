@@ -52,7 +52,7 @@ int	setselect(t_fractol *f, int x, int y)
 	double	pi;
 
 	pr = f->min_r + (double)x * (f->max_r - f->min_r) / WIDTH;
-	pi = f->max_i + (double)y * (f->min_i - f->max_i) / HEIGHT;
+	pi = f->min_i + (double)y * (f->max_i - f->min_i) / HEIGHT;
 	if (f->set == 1)
 		color = mandelbrot(f, pr, pi);
 	else if (f->set == 2)
@@ -63,6 +63,7 @@ int	setselect(t_fractol *f, int x, int y)
 		color = celtic(f, pr, pi);
 	return (color);
 }
+
 
 void	pixelcolor(t_fractol *f, int x, int y, int color)
 {

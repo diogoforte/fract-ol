@@ -40,13 +40,13 @@ int	key_hook(int keycode, t_fractol *f)
 int	key_hook2(int keycode, t_fractol *f)
 {
 	if (keycode == KEY_W)
-		move(f, 0.2, 'U');
+		move(f, 0.2, 1);
 	else if (keycode == KEY_A)
-		move(f, 0.2, 'L');
+		move(f, 0.2, 3);
 	else if (keycode == KEY_S)
-		move(f, 0.2, 'D');
+		move(f, 0.2, 2);
 	else if (keycode == KEY_D)
-		move(f, 0.2, 'R');
+		move(f, 0.2, 4);
 	else if (keycode == KEY_UP)
 		f->max_iter += 50;
 	else if (keycode == KEY_DOWN)
@@ -80,7 +80,7 @@ int	mouse_hook(int button, int x, int y, t_fractol *f)
 	}
 	else if (button == MOUSE_WHEEL_DOWN)
 	{
-		zoom(f, (double)x, (double)y, 0.67);
+		zoom(f, (double)x, (double)y, 0.5);
 	}
 	else
 		return (1);

@@ -65,7 +65,7 @@ int			julia_keys(int keycode, t_fractol *f);
 int			mouse_hook(int button, int x, int y, t_fractol *f);
 void		zoom(t_fractol *f, double mouse_x,
 				double mouse_y, double zoom_factor);
-void		move(t_fractol *f, double distance, char direction);
+void		move(t_fractol *f, double distance, int direction);
 int			key_hook2(int keycode, t_fractol *f);
 void		pixelcolor(t_fractol *f, int x, int y, int color);
 int			setselect(t_fractol *f, int x, int y);

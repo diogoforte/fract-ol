@@ -48,10 +48,10 @@ void	clean_init(t_fractol *f)
 	f->max_r = 2;
 	f->min_i = -2;
 	f->max_i = 2;
-	f->r = 255;
-	f->g = 0;
-	f->b = 0;
-	f->max_iter = 100;
+	f->r = 100;
+	f->g = 100;
+	f->b = 300;
+	f->max_iter = 10;
 }
 
 void	handle_args(t_fractol *f, char **av)
