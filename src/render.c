@@ -51,6 +51,7 @@ int	setselect(t_fractol *f, int x, int y)
 	double	pr;
 	double	pi;
 
+	color = 0;
 	pr = f->min_r + (double)x * (f->max_r - f->min_r) / WIDTH;
 	pi = f->min_i + (double)y * (f->max_i - f->min_i) / HEIGHT;
 	if (f->set == 1)
