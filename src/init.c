@@ -62,13 +62,13 @@ void	handle_args(t_fractol *f, char **av)
 		av[1][i] = ft_tolower(av[1][i]);
 		i++;
 	}
-	if (!ft_strncmp(av[1], "mandelbrot", 10))
+	if (!ft_strncmp(av[1], "mandelbrot", 11))
 		f->set = 1;
-	else if (!ft_strncmp(av[1], "julia", 5))
+	else if (!ft_strncmp(av[1], "julia", 6))
 		f->set = 2;
-	else if (!ft_strncmp(av[1], "burningship", 11))
+	else if (!ft_strncmp(av[1], "tricorn", 8))
 		f->set = 3;
-	else if (!ft_strncmp(av[1], "celtic", 6))
+	else if (!ft_strncmp(av[1], "celtic", 7))
 		f->set = 4;
 	else
 	{
@@ -82,6 +82,8 @@ void	help_msg(void)
 	ft_putstr_fd("Available fractal sets:\n", 2);
 	ft_putstr_fd(" -> \033[0;91mMandelbrot\033[0;0m\n", 2);
 	ft_putstr_fd(" -> \033[0;91mJulia\033[0;0m\n", 2);
+	ft_putstr_fd(" -> \033[0;91mTricorn\033[0;0m\n", 2);
+	ft_putstr_fd(" -> \033[0;91mCeltic\033[0;0m\n", 2);
 	ft_putstr_fd("Run the program like:\n", 2);
 	ft_putstr_fd("./fractol \033[0;91m(fractal set)\x1B[0m\n", 2);
 	exit(1);

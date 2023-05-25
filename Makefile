@@ -21,11 +21,13 @@ CFLAGS	= -Werror -Wextra -Wall
 MLX_PATH	= mlx_linux/
 MLX_NAME	= libmlx.a
 MLX			= $(MLX_PATH)$(MLX_NAME)
+MLX_SRC     = $(wildcard $(MLX_PATH)*.c)
 
 # Libft
 LIBFT_PATH	= libft/
 LIBFT_NAME	= libft.a
 LIBFT		= $(LIBFT_PATH)$(LIBFT_NAME)
+LIBFT_SRC   = $(wildcard $(LIBFT_PATH)*.c)
 
 # Includes
 INC			=	-I ./inc/\
@@ -42,7 +44,7 @@ SRC			=	main.c \
 				zoom.c	\
 				fractal_sets/mandelbrot.c	\
 				fractal_sets/julia.c		\
-				fractal_sets/burningship.c	\
+				fractal_sets/tricorn.c			\
 				fractal_sets/celtic.c
 SRCS		= $(addprefix $(SRC_PATH), $(SRC))
 
@@ -51,29 +53,28 @@ OBJ_PATH	= obj/
 OBJ			= $(SRC:.c=.o)
 OBJS		= $(addprefix $(OBJ_PATH), $(OBJ))
 
-all: $(MLX) $(LIBFT) $(NAME)
+all: $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
-$(OBJS): $(OBJ_PATH)
+$(OBJS): | $(OBJ_PATH)
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)
 	@mkdir $(OBJ_PATH)fractal_sets/
-	@mkdir $(OBJ_PATH)color_schemes/
 
-$(MLX):
+$(MLX): $(MLX_SRC)
 	@echo "\033[0;0mMaking \033[0;91mMiniLibX\033[0;0m..."
-	@make -sC $(MLX_PATH)
+	@make -sC $(MLX_PATH) > /dev/null 2>&1
 	@echo "\033[0;91mMiniLibX \033[0;0mready."
 
-$(LIBFT):
-	@echo "Making libft..."
-	@make -sC $(LIBFT_PATH)
+$(LIBFT): $(LIBFT_SRC)
+	@echo "Making \033[0;91mlibft\033[0;0m..."
+	@make -sC $(LIBFT_PATH) > /dev/null 2>&1
 	@echo "\033[0;91mlibft \033[0;0mready."
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(MLX) $(LIBFT)
 	@echo "\033[0;0mCompiling \033[0;91m$(NAME)\033[0;0m..."
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT) $(INC) -lXext -lX11 -lm
 	@echo "\033[0;91m$(NAME) \033[0;0mready."
@@ -83,14 +84,16 @@ bonus: all
 clean:
 	@echo "\033[0;0mRemoving \033[0;91m.o \033[0;0mobject files..."
 	@rm -rf $(OBJ_PATH)
-	@make clean -C $(MLX_PATH)
-	@make clean -C $(LIBFT_PATH)
+	@make clean -sC $(MLX_PATH) > /dev/null 2>&1
+	@make clean -sC $(LIBFT_PATH) > /dev/null 2>&1
 	@echo "\033[0;91m.o \033[0;0mobject files removed."
 
 fclean: clean
-	@echo "\033[0;mRemoving \033[0;91mfractol\033[0;m..."
+	@echo "\033[0;mRemoving \033[0;91m$(NAME)\033[0;m..."
 	@rm -f $(NAME)
-	@rm -f $(LIBFT_PATH)$(LIBFT_NAME)
+	@rm -f $(LIBFT)
+	@rm -f $(MLX)
+	@echo "\033[0;91m$(NAME) \033[0;0mremoved."
 
 re: fclean all
 

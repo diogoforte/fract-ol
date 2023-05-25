@@ -20,8 +20,8 @@
 # include <stdlib.h>
 
 /*  Dimensions	*/
-# define WIDTH 800
-# define HEIGHT 800
+# define WIDTH 1080
+# define HEIGHT 1080
 
 typedef struct s_fractol
 {
@@ -67,6 +67,6 @@ void		move(t_fractol *f, double distance, char direction);
 int			key_hook2(int keycode, t_fractol *f);
 void		pixelcolor(t_fractol *f, int x, int y, int color);
 int			setselect(t_fractol *f, int x, int y);
-int			burningship(t_fractol *f, double cr, double ci);
+int			tricorn(t_fractol *f, double cr, double ci);
 int			celtic(t_fractol *f, double zr, double zi);
 #endif

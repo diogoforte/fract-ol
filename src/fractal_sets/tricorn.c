@@ -12,26 +12,24 @@
 
 #include "fractol.h"
 
-int	burningship(t_fractol *f, double cr, double ci)
+int tricorn(t_fractol *f, double cr, double ci)
 {
-	int		n;
-	double	zr;
-	double	zi;
-	double	tmp;
+   int     n;
+   double  zr;
+   double  zi;
+   double  tmp;
 
-	zr = 0;
-	zi = 0;
-	n = 0;
-	while (n < f->max_iter)
-	{
-		if ((zr * zr + zi * zi) > 4.0)
-			break ;
-		zr = fabs(zr);
-		zi = fabs(zi);
-		tmp = zr * zr - zi * zi + cr;
-		zi = 2 * zr * zi + ci;
-		zr = tmp;
-		n++;
-	}
-	return (n);
+   zr = 0;
+   zi = 0;
+   n = 0;
+   while (n < f->max_iter)
+   {
+       if ((zr * zr + zi * zi) > 4.0)
+           break ;
+       tmp = zr * zr - zi * zi + cr;
+       zi = -2.0 * zr * zi + ci;
+       zr = tmp;
+       n++;
+   }
+   return (n);
 }

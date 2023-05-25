@@ -58,7 +58,7 @@ int	setselect(t_fractol *f, int x, int y)
 	else if (f->set == 2)
 		color = julia(f, pr, pi);
 	else if (f->set == 3)
-		color = burningship(f, pr, pi);
+		color = tricorn(f, pr, pi);
 	else if (f->set == 4)
 		color = celtic(f, pr, pi);
 	return (color);
