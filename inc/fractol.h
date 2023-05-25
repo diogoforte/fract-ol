@@ -18,6 +18,7 @@
 # include "keys.h"
 # include <math.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 /*  Dimensions	*/
 # define WIDTH 1080
@@ -47,9 +48,10 @@ typedef struct s_fractol
 }t_fractol;
 
 void		help_msg(void);
-void		init(t_fractol *f);
+void		init(t_fractol *f, char **av);
 void		clean_exit(int exit_code, t_fractol *f);
 void		handle_args(t_fractol *f, char **av);
+void		handle_args2(t_fractol *f, char **av);
 int			key_hook(int keycode, t_fractol *f);
 void		my_mlx_pixel_put(t_fractol *f, int x, int y, int color);
 void		renderimg(t_fractol *f);

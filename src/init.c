@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void	init(t_fractol *f)
+void	init(t_fractol *f, char **av)
 {
 	f->mlx = mlx_init();
 	if (!f->mlx)
@@ -20,7 +20,7 @@ void	init(t_fractol *f)
 		ft_putstr_fd("MLX: \033[0;91merror\033[0;0m connecting to mlx.", 2);
 		clean_exit(1, f);
 	}
-	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "Fractol");
+	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "fract-ol");
 	if (!f->win)
 	{
 		ft_putstr_fd("MLX: \033[0;91merror\033[0;0m creating window.", 2);
@@ -35,6 +35,8 @@ void	init(t_fractol *f)
 	f->addr = mlx_get_data_addr(f->img, &(f->bits_per_pixel),
 			&(f->line_length), &(f->endian));
 	clean_init(f);
+	if (av[2] && av[3] && f->set == 2)
+		handle_args2(f, av);
 }
 
 void	clean_init(t_fractol *f)
@@ -77,6 +79,12 @@ void	handle_args(t_fractol *f, char **av)
 	}
 }
 
+void	handle_args2(t_fractol *f, char **av)
+{
+	f->kr = ft_atoi(av[2]);
+	f->ki = ft_atoi(av[3]);
+}
+
 void	help_msg(void)
 {
 	ft_putstr_fd("Available fractal sets:\n", 2);
@@ -86,5 +94,7 @@ void	help_msg(void)
 	ft_putstr_fd(" -> \033[0;91mCeltic\033[0;0m\n", 2);
 	ft_putstr_fd("Run the program like:\n", 2);
 	ft_putstr_fd("./fractol \033[0;91m(fractal set)\x1B[0m\n", 2);
+	ft_putstr_fd("Julia set commands:\n", 2);
+	ft_putstr_fd("./fractol (fractal set)\033[0;91m (real) (imaginary)\033[0;00m.\n", 2);
 	exit(1);
 }

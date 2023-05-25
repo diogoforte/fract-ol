@@ -19,7 +19,7 @@ int	main(int ac, char **av)
 	if (ac < 2)
 		help_msg();
 	handle_args(&f, av);
-	init(&f);
+	init(&f, av);
 	renderimg(&f);
 	mlx_hook(f.win, EVENT_CLOSE_BTN, 0, end_fractol, &f);
 	mlx_key_hook(f.win, key_hook, &f);
