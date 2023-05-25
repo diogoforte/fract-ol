@@ -64,13 +64,12 @@ int	setselect(t_fractol *f, int x, int y)
 	return (color);
 }
 
-
 void	pixelcolor(t_fractol *f, int x, int y, int color)
 {
 	if (color == f->max_iter)
 		color = 0;
 	else
-		color = create_trgb(0, f->r * color / f->max_iter, f->g * color / f->max_iter,
-				f->b * color / f->max_iter);
+		color = create_trgb(0, f->r * color / f->max_iter, f->g * color
+				/ f->max_iter, f->b * color / f->max_iter);
 	my_mlx_pixel_put(f, x, y, color);
 }

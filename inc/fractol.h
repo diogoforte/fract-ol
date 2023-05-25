@@ -21,8 +21,8 @@
 # include <stdio.h>
 
 /*  Dimensions	*/
-# define WIDTH 1080
-# define HEIGHT 1080
+# define WIDTH 900
+# define HEIGHT 900
 
 typedef struct s_fractol
 {

@@ -51,7 +51,7 @@ void	clean_init(t_fractol *f)
 	f->r = 100;
 	f->g = 100;
 	f->b = 300;
-	f->max_iter = 10;
+	f->max_iter = 100;
 }
 
 void	handle_args(t_fractol *f, char **av)
@@ -95,6 +95,7 @@ void	help_msg(void)
 	ft_putstr_fd("Run the program like:\n", 2);
 	ft_putstr_fd("./fractol \033[0;91m(fractal set)\x1B[0m\n", 2);
 	ft_putstr_fd("Julia set commands:\n", 2);
-	ft_putstr_fd("./fractol (fractal set)\033[0;91m (real) (imaginary)\033[0;00m.\n", 2);
+	ft_putstr_fd("./fractol (fractal set)", 2);
+	ft_putstr_fd("\033[0;91m (real) (imaginary)\033[0;00m.\n", 2);
 	exit(1);
 }

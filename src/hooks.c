@@ -75,13 +75,9 @@ int	julia_keys(int keycode, t_fractol *f)
 int	mouse_hook(int button, int x, int y, t_fractol *f)
 {
 	if (button == MOUSE_WHEEL_UP)
-	{
 		zoom(f, (double)x, (double)y, 1.5);
-	}
 	else if (button == MOUSE_WHEEL_DOWN)
-	{
 		zoom(f, (double)x, (double)y, 0.5);
-	}
 	else
 		return (1);
 	if (f)
