@@ -64,13 +64,13 @@ void	handle_args(t_fractol *f, char **av)
 		av[1][i] = ft_tolower(av[1][i]);
 		i++;
 	}
-	if (!ft_strncmp(av[1], "mandelbrot", 11))
+	if (!ft_strncmp(av[1], "mandelbrot", 11) && !av[2])
 		f->set = 1;
-	else if (!ft_strncmp(av[1], "julia", 6))
+	else if (!ft_strncmp(av[1], "julia", 6) && (!av[2] || !av[4]))
 		f->set = 2;
-	else if (!ft_strncmp(av[1], "tricorn", 8))
+	else if (!ft_strncmp(av[1], "tricorn", 8) && !av[2])
 		f->set = 3;
-	else if (!ft_strncmp(av[1], "celtic", 7))
+	else if (!ft_strncmp(av[1], "celtic", 7) && !av[2])
 		f->set = 4;
 	else
 	{
@@ -83,19 +83,33 @@ void	handle_args2(t_fractol *f, char **av)
 {
 	f->kr = ft_atoi(av[2]);
 	f->ki = ft_atoi(av[3]);
+	if (f->kr > 2 || f->kr < -2)
+		end_fractol(f);
+	if (f->ki > 2 || f->ki < -2)
+		end_fractol(f);
 }
 
 void	help_msg(void)
 {
 	ft_putstr_fd("Available fractal sets:\n", 2);
-	ft_putstr_fd(" -> \033[0;91mMandelbrot\033[0;0m\n", 2);
-	ft_putstr_fd(" -> \033[0;91mJulia\033[0;0m\n", 2);
-	ft_putstr_fd(" -> \033[0;91mTricorn\033[0;0m\n", 2);
-	ft_putstr_fd(" -> \033[0;91mCeltic\033[0;0m\n", 2);
+	ft_putstr_fd("  -> \033[0;91mMandelbrot\033[0;0m\n", 2);
+	ft_putstr_fd("  -> \033[0;91mJulia\033[0;0m\n", 2);
+	ft_putstr_fd("  -> \033[0;91mTricorn\033[0;0m\n", 2);
+	ft_putstr_fd("  -> \033[0;91mCeltic\033[0;0m\n", 2);
 	ft_putstr_fd("Run the program like:\n", 2);
-	ft_putstr_fd("./fractol \033[0;91m(fractal set)\x1B[0m\n", 2);
+	ft_putstr_fd("  ./fractol \033[0;91m(fractal set)\x1B[0m\n", 2);
+	ft_putstr_fd("Move the image:\n", 2);
+	ft_putstr_fd("  -> arrow \033[0;91mUP/DOWN/LEFT/RIGHT\x1B[0m\n", 2);
+	ft_putstr_fd("Increase/Decrease iterations:\n", 2);
+	ft_putstr_fd("  -> \033[0;91mPLUS/MINUS\x1B[0m\n", 2);
+	ft_putstr_fd("Change RGB values:\n", 2);
+	ft_putstr_fd("  -> \033[0;91m1 2 3\x1B[0m\n", 2);
+	ft_putstr_fd("Reset RGB values:\n", 2);
+	ft_putstr_fd("  -> \033[0;91m4\x1B[0m\n", 2);
 	ft_putstr_fd("Julia set commands:\n", 2);
-	ft_putstr_fd("./fractol (fractal set)", 2);
-	ft_putstr_fd("\033[0;91m (real) (imaginary)\033[0;00m.\n", 2);
+	ft_putstr_fd("  ./fractol Julia", 2);
+	ft_putstr_fd("\033[0;91m (REAL) (IMAGINARY)\033[0;00m.\n", 2);
+	ft_putstr_fd("Move between Julia sets:\n", 2);
+	ft_putstr_fd("  -> \033[0;91mWASD\x1B[0m\n", 2);
 	exit(1);
 }

@@ -27,11 +27,9 @@
 # define KEY_TWO 50
 # define KEY_THREE 51
 # define KEY_FOUR 52
-# define KEY_FIVE 53
+# define KEY_PLUS 61
+# define KEY_MINUS 45
 # define MOUSE_WHEEL_UP 4
 # define MOUSE_WHEEL_DOWN 5
-# define MOUSE_WHEEL_BTN 3
-# define MOUSE_BTN 1
-# define MOUSE_BTN_2 3
 
 #endif
