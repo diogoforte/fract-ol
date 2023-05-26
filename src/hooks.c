@@ -67,9 +67,9 @@ int	julia_keys(int keycode, t_fractol *f)
 		else if (keycode == KEY_D)
 			f->kr += 0.01;
 		if (keycode == KEY_W)
-			f->kr -= 0.01;
+			f->ki -= 0.01;
 		else if (keycode == KEY_S)
-			f->kr += 0.01;
+			f->ki += 0.01;
 		if (f)
 			renderimg(f);
 	}
