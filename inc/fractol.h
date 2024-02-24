@@ -13,16 +13,17 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include "../mlx_linux/mlx.h"
-# include "libft.h"
+# include "../minilibx-linux/mlx.h"
+# include "../lib/libft.h"
 # include "keys.h"
 # include <math.h>
 # include <stdlib.h>
 # include <stdio.h>
+#include <pthread.h>
 
-/*  Dimensions	*/
 # define WIDTH 900
 # define HEIGHT 900
+# define NUM_THREADS 34
 
 typedef struct s_fractol
 {
@@ -46,6 +47,13 @@ typedef struct s_fractol
 	int			line_length;
 	int			endian;
 }t_fractol;
+
+typedef struct s_thread_data
+{
+    t_fractol *f;
+    int start_y;
+    int end_y;
+} t_thread_data;
 
 void		help_msg(void);
 void		init(t_fractol *f, char **av);

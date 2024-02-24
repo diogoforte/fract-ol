@@ -25,24 +25,45 @@ int	create_trgb(int t, int r, int g, int b)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-void	renderimg(t_fractol *f)
+void *renderimg_thread(void *arg)
 {
-	int	x;
-	int	y;
+    t_thread_data *data = (t_thread_data *)arg;
+    t_fractol *f = data->f;
+    int x, y;
 
-	ft_putstr_fd("Rendering image...\n", 2);
-	mlx_clear_window(f->mlx, f->win);
-	y = -1;
-	while (++y < HEIGHT)
-	{
-		x = -1;
-		while (++x < WIDTH)
-		{
-			pixelcolor(f, x, y, setselect(f, x, y));
-		}
-	}
-	mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
-	ft_putstr_fd("Image rendered.\n", 2);
+    for (y = data->start_y; y < data->end_y; y++)
+    {
+        for (x = 0; x < WIDTH; x++)
+        {
+            pixelcolor(f, x, y, setselect(f, x, y));
+        }
+    }
+
+    return NULL;
+}
+
+void renderimg(t_fractol *f)
+{
+    pthread_t threads[NUM_THREADS];
+    t_thread_data thread_data[NUM_THREADS];
+    int i;
+
+    for (i = 0; i < NUM_THREADS; i++)
+    {
+        thread_data[i].f = f;
+        thread_data[i].start_y = i * HEIGHT / NUM_THREADS;
+        thread_data[i].end_y = (i + 1) * HEIGHT / NUM_THREADS;
+
+        pthread_create(&threads[i], NULL, renderimg_thread, &thread_data[i]);
+    }
+
+    for (i = 0; i < NUM_THREADS; i++)
+    {
+        pthread_join(threads[i], NULL);
+    }
+
+    mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
+    ft_putstr_fd("Image rendered.\n", 2);
 }
 
 int	setselect(t_fractol *f, int x, int y)

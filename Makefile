@@ -1,42 +1,33 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/05 10:54:09 by dinunes-          #+#    #+#              #
-#    Updated: 2023/05/05 10:54:09 by dinunes-         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+BLUE = \033[0;94m
+GREEN = \e[1;92m
+RED = \033[0;91m
+RESET = \033[1;30m
+WHITE = \033[1;97m
+YELLOW = \033[1;33m
 
-#Program name
-NAME	= fractol
+EMOJI_PACKAGE = \360\237\223\246
+EMOJI_HAMMER = \360\237\224\250
+EMOJI_TRASH = \360\237\227\221\357\270\217
 
-# Compiler
-CC		= cc
-CFLAGS	= -Werror -Wextra -Wall
+NAME = fractol
 
-# Minilibx
-MLX_PATH	= mlx_linux/
-MLX_NAME	= libmlx.a
-MLX			= $(MLX_PATH)$(MLX_NAME)
-MLX_SRC     = $(wildcard $(MLX_PATH)*.c)
+CC = cc
+CFLAGS = -Werror -Wextra -Wall -O3
 
-# Libft
-LIBFT_PATH	= libft/
-LIBFT_NAME	= libft.a
-LIBFT		= $(LIBFT_PATH)$(LIBFT_NAME)
-LIBFT_SRC   = $(wildcard $(LIBFT_PATH)*.c)
+MINILIBX_PATH = minilibx-linux/
+MINILIBX_NAME = libmlx.a
+MINILIBX = $(MINILIBX_PATH)$(MINILIBX_NAME)
 
-# Includes
-INC			=	-I ./inc/\
-				-I ./libft/\
-				-I ./minilibx-linux/
+LIBFT_PATH = lib/
+LIBFT_NAME = libft.a
+LIBFT = $(LIBFT_PATH)$(LIBFT_NAME)
 
-# Sources
-SRC_PATH	=	src/
-SRC			=	main.c \
+INC = -I ./inc/
+SRC_PATH = src/
+OBJ_PATH = obj/
+
+SRC = $(addprefix $(SRC_PATH), \
+		main.c \
 				init.c	\
 				exit.c	\
 				hooks.c \
@@ -45,56 +36,43 @@ SRC			=	main.c \
 				fractal_sets/mandelbrot.c	\
 				fractal_sets/julia.c		\
 				fractal_sets/tricorn.c			\
-				fractal_sets/celtic.c
-SRCS		= $(addprefix $(SRC_PATH), $(SRC))
+				fractal_sets/celtic.c)
 
-# Objects
-OBJ_PATH	= obj/
-OBJ			= $(SRC:.c=.o)
-OBJS		= $(addprefix $(OBJ_PATH), $(OBJ))
+$(OBJ): $(OBJ_PATH)
+
+OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)
 
 all: $(NAME)
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
-
-$(OBJS): | $(OBJ_PATH)
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@printf "$(EMOJI_HAMMER)	$(BLUE)Compiling $(WHITE)$(NAME)		$(BLUE)%-33s$(WHITE)\r" $(notdir $@)
 
 $(OBJ_PATH):
-	@mkdir $(OBJ_PATH)
-	@mkdir $(OBJ_PATH)fractal_sets/
+	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)/fractal_sets
 
-$(MLX): $(MLX_SRC)
-	@echo "\033[0;0mMaking \033[0;91mMiniLibX\033[0;0m..."
-	@make -sC $(MLX_PATH) > /dev/null 2>&1
-	@echo "\033[0;91mMiniLibX \033[0;0mready."
+$(LIBFT):
+	@make -sC $(LIBFT_PATH) > /dev/null
 
-$(LIBFT): $(LIBFT_SRC)
-	@echo "Making \033[0;91mlibft\033[0;0m..."
-	@make -sC $(LIBFT_PATH) > /dev/null 2>&1
-	@echo "\033[0;91mlibft \033[0;0mready."
+$(MINILIBX):
+	@make -sC $(MINILIBX_PATH) > /dev/null
 
-$(NAME): $(OBJS) $(MLX) $(LIBFT)
-	@echo "\033[0;0mCompiling \033[0;91m$(NAME)\033[0;0m..."
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT) $(INC) -lXext -lX11 -lm
-	@echo "\033[0;91m$(NAME) \033[0;0mready."
-
-bonus: all
+$(NAME): $(MINILIBX) $(LIBFT) $(OBJ)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT_PATH) -lft -L$(MINILIBX_PATH) -lmlx -L/usr/X11/lib -lX11 -lXext -lm
+	@printf  "\n$(EMOJI_PACKAGE)	$(WHITE)$(NAME)			$(YELLOW)compiled$(WHITE)\n"
 
 clean:
-	@echo "\033[0;0mRemoving \033[0;91m.o \033[0;0mobject files..."
 	@rm -rf $(OBJ_PATH)
-	@make clean -sC $(MLX_PATH) > /dev/null 2>&1
-	@make clean -sC $(LIBFT_PATH) > /dev/null 2>&1
-	@echo "\033[0;91m.o \033[0;0mobject files removed."
+	@make clean -sC $(LIBFT_PATH) > /dev/null
+	@make clean -sC $(MINILIBX_PATH) > /dev/null
 
 fclean: clean
-	@echo "\033[0;mRemoving \033[0;91m$(NAME)\033[0;m..."
 	@rm -f $(NAME)
 	@rm -f $(LIBFT)
-	@rm -f $(MLX)
-	@echo "\033[0;91m$(NAME) \033[0;0mremoved."
+	@rm -f $(MINILIBX)
+	@printf "$(EMOJI_TRASH)	$(WHITE)$(NAME)			$(RED)removed$(WHITE)\n"
 
 re: fclean all
 
-.PHONY: all re clean fclean
+.PHONY: all re clean fclean run
